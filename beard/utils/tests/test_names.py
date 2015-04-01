@@ -10,13 +10,19 @@
 """Tests of personal names helpers.
 
 .. codeauthor:: Gilles Louppe <g.louppe@cern.ch>
-.. codeauthor:: Mateusz Susik <m.susik@cern.ch>
+.. codeauthor:: Mateusz Susik <mateusz.susik@cern.ch>
 
 """
 
 from beard.ext.metaphone import dm
 
-from ..names import normalize_name, dm_tokenize_name
+from ..names import normalize_name, dm_tokenize_name, first_name_initial, \
+    name_initials
+
+
+def test_name_initals():
+    """Test extracting name initials."""
+    assert name_initials("Dupont, Jean-René") == set(['D', 'J'])
 
 
 def test_normalize_name():
@@ -56,6 +62,7 @@ def test_dm_tokenize_name_simple():
     assert dm_tokenize_name("Dupont, J.R.") == \
         dm_tokenize_name("Dupont, J.-R.")
     assert dm_tokenize_name("Dupont") == ((dm(u"Dupont")[0],), ('',))
+    assert dm_tokenize_name("Jean Dupont") == dm_tokenize_name("Dupont, Jean")
 
 
 def test_dm_tokenize_name_with_soft_sign():
@@ -78,3 +85,13 @@ def test_dm_tokenize_name_remove_common_affixes():
     # Don't drop affixes among the first names.
     assert dm_tokenize_name("Robert, L. W.") == ((dm(u"Robert")[0],),
                                                  (dm(u"L")[0], dm(u"W")[0]))
+
+
+def test_first_name_initial():
+    """ Test the extraction of the first initial."""
+    assert first_name_initial("Doe, John") == 'j'
+    assert first_name_initial("Doe-Foe, Willem") == 'w'
+    assert first_name_initial("Dupont, Jean-René") == 'j'
+    assert first_name_initial("Dupont, René, III") == 'r'
+    assert first_name_initial("Mieszko") == ''
+    assert first_name_initial("Dupont, .J") == 'j'

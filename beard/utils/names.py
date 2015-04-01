@@ -150,3 +150,28 @@ def tokenize_name(name, handle_soft_sign=True, drop_common_affixes=True):
             tokens[0] = without_affixes
 
     return tokens
+
+RE_CHARACTERS = re.compile('\w')
+
+
+@memoize
+def first_name_initial(name):
+    """Get the initial from the first given name if available
+
+    Parameters
+    ----------
+    :param name: string
+        Name of the author. Usually it should be in the format:
+        surnames, first names.
+
+    Returns
+    -------
+    :return: string
+        The first initial. Asciified one character, lowercase if available,
+        empty string otherwise.
+    """
+    try:
+        asciified = asciify(name.split(",")[1]).lower().strip()
+        return RE_CHARACTERS.findall(asciified)[0]
+    except IndexError:
+        return ""
