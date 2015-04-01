@@ -5,6 +5,8 @@
 # under the terms of the Revised BSD License; see LICENSE file for
 # more details.
 
+sudo: false
+
 language: python
 
 matrix:
