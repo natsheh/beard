@@ -5,7 +5,7 @@
 # under the terms of the Revised BSD License; see LICENSE file for
 # more details.
 
-sudo: false
+sudo: required
 
 language: python
 
