@@ -56,8 +56,8 @@ RE_REMOVE_NON_CHARACTERS = re.compile('[^a-zA-Z\',\s]+')
 DROPPED_AFFIXES = {'a', 'ab', 'am', 'ap', 'abu', 'al', 'auf', 'aus', 'bar',
                    'bath', 'bat', 'ben', 'bet', 'bin', 'bint', 'd', 'da',
                    'dall', 'dalla', 'das', 'de', 'degli', 'del', 'dell',
-                   'della', 'dem', 'den', 'der', 'di', 'do', 'dos', 'du', 'e',
-                   'el', 'i', 'ibn', 'im', 'jr', 'l', 'la', 'las', 'le',
+                   'della', 'dem', 'den', 'der', 'di', 'do', 'dos', 'ds', 'du',
+                   'e', 'el', 'i', 'ibn', 'im', 'jr', 'l', 'la', 'las', 'le',
                    'los', 'm', 'mac', 'mc', 'mhic', 'mic', 'o', 'ter', 'und',
                    'v', 'van', 'vom', 'von', 'zu', 'zum', 'zur'}
 
@@ -156,7 +156,7 @@ RE_CHARACTERS = re.compile('\w')
 
 @memoize
 def first_name_initial(name):
-    """Get the initial from the first given name if available
+    """Get the initial from the first given name if available.
 
     Parameters
     ----------

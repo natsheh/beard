@@ -10,7 +10,9 @@
 """Clustering algorithms."""
 
 from .blocking import BlockClustering
+from .preclustering import dm_preclustering
 from .wrappers import ScipyHierarchicalClustering
 
 __all__ = ("BlockClustering",
+           "dm_precluster",
            "ScipyHierarchicalClustering")
