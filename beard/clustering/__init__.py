@@ -14,5 +14,5 @@ from .preclustering import dm_preclustering
 from .wrappers import ScipyHierarchicalClustering
 
 __all__ = ("BlockClustering",
-           "dm_precluster",
+           "dm_preclustering",
            "ScipyHierarchicalClustering")

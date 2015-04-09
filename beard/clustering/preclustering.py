@@ -13,8 +13,6 @@
 
 """
 
-from copy import copy
-
 import numpy as np
 import six
 
@@ -46,7 +44,7 @@ class Precluster:
         # with multiple surnames, this signature will be counted to
         # _single_names_variants. This way we can omit dividing by 0.
         self._single_names_variants = 1
-        self._name = copy(tokens[0][-1])
+        self._name = tokens[0][-1]
 
     def add_signature(self, tokens):
         """Add a signature to the precluster.

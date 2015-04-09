@@ -43,6 +43,7 @@ def test_add_signature(precluster):
 def test_compare_tokens_from_back(precluster):
     """Test comparing tokens from the back."""
     assert precluster.compare_tokens_from_back(("VSQ",), ("ABC",))
+    assert precluster.compare_tokens_from_back(("C", "D", "VSQ",), ("ABC",))
     with pytest.raises(KeyError) as excinfo:
         precluster.compare_tokens_from_back(("VSQ",), ("DEF"))
     assert "cluster doesn't contain a key" in str(excinfo.value)
@@ -59,6 +60,13 @@ def test_initials_score(precluster):
     assert precluster.initials_score(("D", "VSQ"), ("ABC",)) == 2
     assert precluster.initials_score(("D", "V", "R"), ("ABC",)) == 0
     assert precluster.initials_score(("D", "VR"), ("ABC",)) == 0
+    precluster.add_signature((("H", "H"), ("ABC",)))
+    assert precluster.initials_score(("H",), ("ABC",)) == 1
+
+    # Check wrong key
+    with pytest.raises(KeyError) as excinfo:
+        precluster.initials_score(("VSQ",), ("DEF"))
+    assert "cluster doesn't contain a key" in str(excinfo.value)
 
     # Double metaphone algorithm can output empty string as the result
     precluster.add_signature((("ABC",), ("E", "")))
@@ -83,3 +91,9 @@ def test_single_names_variants():
     assert precluster_.single_names_variants() == 1
     precluster_.add_signature((("ABC", "DEF"), ("D", "VSQ")))
     assert precluster_.single_names_variants() == 1
+
+
+def test_contains(precluster):
+    """Test contains method."""
+    assert precluster.contains(("ABC",))
+    assert not precluster.contains(("DEF",))
