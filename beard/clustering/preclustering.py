@@ -82,6 +82,11 @@ class Precluster:
         :param last_name: tuple
             Tokens, usually one, representing last surname(s) of the author.
 
+        Raises
+        ------
+        :raises: KeyError
+            When the last name is not included in the cluster
+
         Returns
         -------
         :returns: boolean
@@ -135,6 +140,16 @@ class Precluster:
             Tuple of strings representing given names of the new author
         :param last_name: tuple
             Tokens, usually one, representing last surname(s) of the author.
+
+        Raises
+        ------
+        :raises: KeyError
+            When the last name is not included in the cluster
+
+        Returns
+        -------
+        :returns: integer
+            Score for matching initials in the cluster.
         """
         result = 0
         if last_name in self._content:
@@ -168,7 +183,6 @@ class Precluster:
         The only exception is that when the precluster was created by a
         signature which consisted of more than one surname, the result will
         be increased by one, so that the result can be used for normalization.
-
 
         Returns
         -------
@@ -227,7 +241,44 @@ def _split_blocks(blocks, X, threshold):
 
 
 def dm_preclustering(X, threshold=1000):
-    """Blah."""
+    """Precluster the signatures.
+
+    This preclustering algorithm takes into consideration the cases, where
+    author has more than one surname. Such a signature can be preclustered
+    with the precluster for the first author surname or the last one.
+
+    The names are preprocessed by ``dm_tokenize_name`` function. As a result,
+    here the algorithm operates on ``Double Metaphone`` tokens which are
+    previously normalized.
+
+    The algorithm has two phases. In the first phase, all the signatures with
+    one surname are clustered together. In the second phase, the signatures
+    with multiple surnames are compared with the blocks for the first and
+    last surname.
+
+    The preclustering favours the precluster of the last surname if some of the
+    rest of the surnames are already included in this precluster.
+
+    To prevent creation of too big clusters, the ``threshold`` parameter can
+    be set. The algorithm will split every block which size is bigger than
+    ``threshold`` into smaller ones using first names initials as the
+    condition.
+
+    Parameters
+    ----------
+    :param X: numpy array
+        Array of one element arrays of dictionaries. Each dictionaey represent
+        a signature. The algorithm needs ``author_name`` field in the
+        dictionaries in order to work.
+    :param threshold: integer
+        Size above which the blocks will be split into smaller ones.
+
+    Returns
+    -------
+    :returns: numpy array
+        Array with ids of the blocks. The ids are strings. The order of the
+        array is the same as in the ``X`` input parameter.
+    """
     id_to_cluster = {}
     ordered_tokens = []
 
