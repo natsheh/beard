@@ -20,7 +20,7 @@ from ..preclustering import dm_preclustering
 
 def run_preclustering(names, expected_results, threshold=100):
     """Run dm_preclustering and assert that the results are correct."""
-    sigs = np.array([{'author_name': sig} for sig in names])
+    sigs = np.array([[{'author_name': sig}] for sig in names])
     for index, value in enumerate(dm_preclustering(sigs, threshold)):
         assert names[index] == expected_results[index]
 
