@@ -49,7 +49,13 @@ def test_no_suitable_block_for_multiple_surnames():
     run_preclustering(['Jones-Smith, Joe'], ['SM0'])
 
 
-def test_precluster_splitt():
+def test_precluster_split():
     """Check if huge blocks are split."""
     run_preclustering(['Smith, Joe', 'Smith, Paul'], ['SM0j', 'SM0p'],
                       threshold=1)
+
+
+def test_compare_tokens_from_back_usage():
+    """Check if the surnames are compared to the first_names."""
+    run_preclustering(['Jones, Joe', 'Smith, Joe Jones', 'Jones, Joe',
+                       'Jones-Smith, Joe'], ['JNS', 'SM0', 'JNS', 'SM0'])
