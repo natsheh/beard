@@ -62,7 +62,7 @@ def test_initials_score(precluster):
     assert precluster.initials_score(("D", "VR"), ("ABC",)) == 0
     precluster.add_signature((("ABC",), ("", "")))
     assert precluster.initials_score(("",), ("ABC",)) == 1
-    assert precluster.initials_score(("H",), ("ABC",)) == 0
+    assert precluster.initials_score(("H",), ("ABC",)) == 1
 
     # Check wrong key
     with pytest.raises(KeyError) as excinfo:
