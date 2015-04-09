@@ -46,9 +46,10 @@ def test_last_surname_included():
 
 def test_no_suitable_block_for_multiple_surnames():
     """Check if a block is created for surnames that don't match."""
-    run_preclustering(['Jones-Smith, Joe'], ['JNS'])
+    run_preclustering(['Jones-Smith, Joe'], ['SM0'])
 
 
 def test_precluster_splitt():
     """Check if huge blocks are split."""
-    run_preclustering(['Smith, Joe', 'Smith, Paul'], ['SM0j', 'SM0p'])
+    run_preclustering(['Smith, Joe', 'Smith, Paul'], ['SM0j', 'SM0p'],
+                      threshold=1)
