@@ -22,7 +22,7 @@ def run_preclustering(names, expected_results, threshold=100):
     """Run dm_preclustering and assert that the results are correct."""
     sigs = np.array([[{'author_name': sig}] for sig in names])
     for index, value in enumerate(dm_preclustering(sigs, threshold)):
-        assert names[index] == expected_results[index]
+        assert value == expected_results[index]
 
 
 def test_single_signature():
