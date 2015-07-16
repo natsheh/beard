@@ -37,7 +37,6 @@ from utils import get_abstract
 from utils import get_coauthors_from_range
 from utils import get_keywords
 from utils import get_collaborations
-from utils import get_references
 from utils import get_year
 from utils import group_by_signature
 from utils import load_signatures
@@ -148,15 +147,6 @@ def _build_distance_estimator(X, y, verbose=0):
         ("collaborations_similarity", Pipeline([
             ("pairs", PairTransformer(element_transformer=Pipeline([
                 ("collaborations", FuncTransformer(func=get_collaborations)),
-                ("shaper", Shaper(newshape=(-1,))),
-                ("tf-idf", TfidfVectorizer(dtype=np.float32,
-                                           decode_error="replace")),
-            ]), groupby=group_by_signature)),
-            ("combiner", CosineSimilarity())
-        ])),
-        ("references_similarity", Pipeline([
-            ("pairs", PairTransformer(element_transformer=Pipeline([
-                ("references", FuncTransformer(func=get_references)),
                 ("shaper", Shaper(newshape=(-1,))),
                 ("tf-idf", TfidfVectorizer(dtype=np.float32,
                                            decode_error="replace")),
